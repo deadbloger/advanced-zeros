@@ -47,19 +47,23 @@ function getZerosCount(number, basesystem) {
     let maxInteger = Math.max.apply(null, getSimpleMnBase(basesystem))
     console.log('Наибольший множитель: ', maxInteger) // выбираем наибольший множитель
 
+    let maxIntegerPower = simpleIntegersBase.filter(i => i === maxInteger).length;
+    console.log('Степень наибольшего множителя: ', maxIntegerPower) // определяем степень максимального множителя
+
+
     let base = maxInteger;
 
     for (i = 1; i < 256; i++) { // задаем количество итераций в 256
         baseExponent = Math.pow(base, i) // возводим base в возрастающую степень (1, 2(квадрат), 3 (куб)...)
 
-        if (baseExponent >= number)
+        if (baseExponent > number)
             break; // прерываем цикл чтобы не вычислять операции, которые вернут меньше 1
         //   console.log(baseExponent)
 
 
         addInt = integersArray.unshift(Math.floor(number / baseExponent)) // ищем количество вхождений множителей
 
-        intSumm = integersArray.reduce((a, b) => a + b, 0); // суммируем количество множителей (массив)
+        intSumm = Math.floor(integersArray.reduce((a, b) => a + b, 0) / maxIntegerPower); // вычисляем количество вхождений максимального элемента (нули)
     }
 
 
@@ -73,4 +77,4 @@ function getZerosCount(number, basesystem) {
 
 
 }
-//console.log(getZerosCount(58186721, 4))
+//console.log('need 14460180 || ', getZerosCount(72300914, 160))
